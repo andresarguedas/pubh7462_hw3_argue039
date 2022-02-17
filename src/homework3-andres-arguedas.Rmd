@@ -67,7 +67,7 @@ instacart <- read_csv("./data/instacart.csv") %>%
 
 Having loaded the data into R, we can proceed to create a first table to summarize some of the variables of interest in the data set. Specifically, we will 
 
-```{r summary-table}
+```{r summary-table, eval = F}
 instacart %>%
   group_by(order_id, user_id) %>%
   summarise(
@@ -97,9 +97,10 @@ instacart %>%
     median = md("**Median**"), sd = md("**Std. Dev.**")
   ) %>%
   cols_align(align = "left", columns = variable) %>%
-  cols_align(align = "center", columns = -variable) %>% 
-  as_raw_html()
+  cols_align(align = "center", columns = -variable)
 ```
+
+![](../figures/summary-table.png)
 
 ```{r orders-per-aisle, fig.height = 30}
 instacart %>%
@@ -150,7 +151,7 @@ instacart %>%
   )
 ```
 
-```{r top-5-products-table, message = F}
+```{r top-5-products-table, eval = F}
 top_5_aisle <- instacart %>%
   group_by(aisle) %>%
   summarise(n_items_purchased = n()) %>%
@@ -185,6 +186,7 @@ instacart %>% filter(aisle %in% top_5_aisle$aisle) %>%
   tab_stubhead(label = md("**Aisle**")) %>%
   cols_align(align = "left", columns = product_name) %>% 
   cols_align(align = "center", columns = n_items_purchased) %>%
-  tab_options(row_group.as_column = TRUE) %>% 
-  as_raw_html()
+  tab_options(row_group.as_column = TRUE)
 ```
+
+![](../figures/top-5-table.png)
