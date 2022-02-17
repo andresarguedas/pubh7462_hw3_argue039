@@ -49,11 +49,15 @@ options(digits = 4)
 
 ## Instacart
 
-### 3.1
+First, we will start by loading the `instacart.csv` file, located in the `/data` folder into R as the `instacart` object:
 
 ```{r load-data, message = F}
-
-instacart <- read_csv("data/instacart.csv") %>%
+# Load the data from `instacart.csv` into R as the `instacart` object, and
+# change some variables for ease of use later
+instacart <- read_csv("./data/instacart.csv") %>%
+  # Change the `aisle`, `department`, and `product_name` to factors, for ease of
+  # use, and also change the text in the `aisle` and `department` variables to
+  # be more readable
   mutate(
     aisle = factor(aisle) %>% str_to_title(),
     department = factor(department) %>% str_to_title(),
@@ -61,7 +65,9 @@ instacart <- read_csv("data/instacart.csv") %>%
   )
 ```
 
-```{r summary-table, eval = F}
+Having loaded the data into R, we can proceed to create a first table to summarize some of the variables of interest in the data set. Specifically, we will 
+
+```{r summary-table}
 instacart %>%
   group_by(order_id, user_id) %>%
   summarise(
@@ -91,10 +97,9 @@ instacart %>%
     median = md("**Median**"), sd = md("**Std. Dev.**")
   ) %>%
   cols_align(align = "left", columns = variable) %>%
-  cols_align(align = "center", columns = -variable)
+  cols_align(align = "center", columns = -variable) %>% 
+  as_raw_html()
 ```
-
-![](../figures/summary-table.png)
 
 ```{r orders-per-aisle, fig.height = 30}
 instacart %>%
@@ -145,7 +150,7 @@ instacart %>%
   )
 ```
 
-```{r top-5-products-table, eval = F}
+```{r top-5-products-table, message = F}
 top_5_aisle <- instacart %>%
   group_by(aisle) %>%
   summarise(n_items_purchased = n()) %>%
@@ -180,7 +185,6 @@ instacart %>% filter(aisle %in% top_5_aisle$aisle) %>%
   tab_stubhead(label = md("**Aisle**")) %>%
   cols_align(align = "left", columns = product_name) %>% 
   cols_align(align = "center", columns = n_items_purchased) %>%
-  tab_options(row_group.as_column = TRUE)
+  tab_options(row_group.as_column = TRUE) %>% 
+  as_raw_html()
 ```
-
-![](../figures/top-5-table.png)
