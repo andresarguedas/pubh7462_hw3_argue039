@@ -3,8 +3,6 @@ PubH7462 - Homework 3
 Andrés Arguedas
 17/2/2022
 
--   [Instacart](#instacart)
-
 ## Instacart
 
 First, we will start by loading the `instacart.csv` file, located in the
@@ -26,7 +24,11 @@ instacart <- read_csv("./data/instacart.csv") %>%
 
 Having loaded the data into R, we can proceed to create a first table to
 summarize some of the variables of interest in the data set.
-Specifically, we will
+Specifically, we will look at the overall mean, median, and standard
+deviation across all orders for customers regarding their days since
+last order, as well as the number of items, aisles, departments, the
+order number, and finally the percent of items which have been
+reordered. These summaries are presented in the following table:
 
 ``` r
 instacart %>%
@@ -63,6 +65,10 @@ instacart %>%
 
 ![](../figures/summary-table.png)
 
+Moving now into more information about specific orders, we are also
+interested in the total number of orders for each aisle, which is
+presented in the following figure:
+
 ``` r
 instacart %>%
   group_by(aisle) %>%
@@ -81,6 +87,12 @@ instacart %>%
 ```
 
 ![](homework3-andres-arguedas_files/figure-gfm/orders-per-aisle-1.png)<!-- -->
+
+As we can see there are a large number of aisles which have a small
+amount of orders, hence we can further reduce the information from the
+above plot by focusing only on the top 6 aisles in the top 6
+departments, according to the total number of items purchased, which is
+presented below:
 
 ``` r
 top_6_dep <- instacart %>%
@@ -115,6 +127,10 @@ instacart %>%
 ```
 
 ![](homework3-andres-arguedas_files/figure-gfm/top-6-dep-aisles-1.png)<!-- -->
+
+Finally, we can also focus on the top 5 items bought in the top 5
+aisles, once again by total number of products bought, which is
+presented in the following table:
 
 ``` r
 top_5_aisle <- instacart %>%
